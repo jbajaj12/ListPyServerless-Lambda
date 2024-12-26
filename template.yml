@@ -1,0 +1,131 @@
+# This AWS SAM template has been generated from your function's configuration. If
+# your function has one or more triggers, note that the AWS resources associated
+# with these triggers aren't fully specified in this template and include
+# placeholder values. Open this template in AWS Infrastructure Composer or your
+# favorite IDE and modify it to specify a serverless application with other AWS
+# resources.
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: An AWS Serverless Application Model template describing your function.
+Resources:
+  ListPyServerless:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./src
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Handler: datadog_lambda.handler.handler
+      Runtime: python3.12
+      Architectures:
+        - x86_64
+      EphemeralStorage:
+        Size: 512
+      Environment:
+        Variables:
+          DATADOG_API_KEY_SECRET_ARN: >-
+            arn:aws:secretsmanager:us-east-1:601427279990:secret:JayBTestSecretAPIKey-0zQPH7
+          DD_SITE: datadoghq.com
+          DD_TRACE_ENABLED: 'true'
+          DD_LOG_LEVEL: debug
+          DATADOG_API_KEY: 
+          DD_ENV: test
+          DD_CAPTURE_LAMBDA_PAYLOAD: 'false'
+          DD_LAMBDA_HANDLER: lambda_function.lambda_handler
+          DD_API_KEY_SECRET_ARN: >-
+            arn:aws:secretsmanager:us-east-1:601427279990:secret:JayBTestSecretAPIKey-0zQPH7
+          DATADOG_SITE: datadoghq.com
+          DD_MERGE_XRAY_TRACES: 'false'
+          DD_SERVERLESS_APPSEC_ENABLED: 'false'
+          DD_SERVICE: listpy
+          DD_VERSION: '1'
+          DD_TRACE_DEBUG: 'true'
+          DD_FLUSH_TO_LOG: 'true'
+      EventInvokeConfig:
+        MaximumEventAgeInSeconds: 21600
+        MaximumRetryAttempts: 2
+      Layers:
+        - arn:aws:lambda:us-east-1:464622532012:layer:Datadog-Extension:67
+        - arn:aws:lambda:us-east-1:464622532012:layer:Datadog-Python312:104
+      PackageType: Zip
+      Policies:
+        - Statement:
+            - Sid: VisualEditor0
+              Effect: Allow
+              Action:
+                - dynamodb:ListTables
+                - dynamodb:ListBackups
+                - dynamodb:PurchaseReservedCapacityOfferings
+                - dynamodb:UpdateAbacStatus
+                - dynamodb:GetAbacStatus
+                - dynamodb:ListStreams
+                - dynamodb:ListContributorInsights
+                - dynamodb:DescribeReservedCapacityOfferings
+                - dynamodb:ListGlobalTables
+                - dynamodb:DescribeReservedCapacity
+                - dynamodb:ListImports
+                - dynamodb:DescribeLimits
+                - dynamodb:DescribeEndpoints
+                - dynamodb:ListExports
+              Resource: '*'
+            - Sid: VisualEditor1
+              Effect: Allow
+              Action:
+                - dynamodb:*
+              Resource: >-
+                arn:aws:dynamodb:us-east-1:601427279990:table/JayB-Test-DynamoDB-List
+            - Sid: VisualEditor0
+              Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource: >-
+                arn:aws:secretsmanager:us-east-1:601427279990:secret:JayBTestSecretAPIKey-0zQPH7
+            - Effect: Allow
+              Action:
+                - logs:CreateLogGroup
+              Resource: arn:aws:logs:us-east-1:601427279990:*
+            - Effect: Allow
+              Action:
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+              Resource:
+                - >-
+                  arn:aws:logs:us-east-1:601427279990:log-group:/aws/lambda/ListPyServerless:*
+      RecursiveLoop: Terminate
+      SnapStart:
+        ApplyOn: None
+      Tags:
+        PrincipalId: AROAYYB64AB3JW3VETDNL
+        User: jay.bajaj@datadoghq.com
+        dd_sls_ci: v2.45.1
+        please_keep_my_resource: 'true'
+        team: Technical Support Engineer
+        user: Jay.Bajaj
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /item
+            Method: GET
+        Api2:
+          Type: Api
+          Properties:
+            Path: /items
+            Method: GET
+        Api3:
+          Type: Api
+          Properties:
+            Path: /item
+            Method: DELETE
+        Api4:
+          Type: Api
+          Properties:
+            Path: /item
+            Method: PATCH
+        Api5:
+          Type: Api
+          Properties:
+            Path: /item
+            Method: POST
+      RuntimeManagementConfig:
+        UpdateRuntimeOn: Auto
